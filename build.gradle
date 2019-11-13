@@ -1,0 +1,44 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+group = 'io.pivotal.pa'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Needed for the JDBC and Redis connectors
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// Spring Reactive Web dependencies
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	// Use this instead of spring-cloud-connectors
+	implementation 'io.pivotal.cfenv:java-cfenv-boot:1.0.1.RELEASE'
+
+	// Includes the MS SQL Server JDBC Driver in the built Spring Boot JAR
+	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+}
+
+// Allows passing in arguments to the Spring Boot launcher using `-Pargs="args,to,pass"`
+bootRun {
+    if (project.hasProperty('args')) {
+        args project.args.split(',')
+    }
+}
+
+test {
+	useJUnitPlatform()
+}

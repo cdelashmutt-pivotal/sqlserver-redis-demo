@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://<sql-server-host>:<sql-server-port>;database=<database-name>
+    username: <sql-server-username>
+    password: <sql-server-password>
+  redis:
+    host: <redis-host>
+    port: <redis-port>
+    password: <redis-password>
